@@ -6,6 +6,7 @@ export const effect = (fn) => {
     };
     _effect();
 };
+// 收集依赖
 const targetMap = new WeakMap();
 export const track = (target, key) => {
     let depsMap = targetMap.get(target);

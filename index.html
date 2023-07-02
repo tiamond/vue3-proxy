@@ -16,19 +16,27 @@
     const user = reactive({
       name: 'alice',
       age: 18,
-      like:'dream'
+      like:'dream',
+      foo: {
+        bar: {
+          deep: '678'
+        }
+      }
     })
 
     effect(() => {
-      document.querySelector('#app').innerHTML =`${user.name} -- ${user.age} -- ${user.like}`
+      document.querySelector('#app').innerHTML =`${user.name} -- ${user.age} -- ${user.like} -- ${user.foo.bar.deep}`
     })
 
     setTimeout(() => {
       user.name = 'sz'
       setTimeout(() => {
         user.age = 19
+        setTimeout(() => {
+          user.foo.bar.deep = '666'
+        }, 1000);
       }, 1000);
-    }, 1000);
+    }, 2000);
   </script>
 </body>
 
