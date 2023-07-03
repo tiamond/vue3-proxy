@@ -1,11 +1,18 @@
+interface Options {
+  scheduler?: Function
+}
+
 let activeEffect: Function
-export const effect = (fn: Function) => {
+export const effect = (fn: Function, _options?: Options) => {
   const _effect = function () {
     activeEffect = _effect
-    fn()
+    let res = fn()
+    return res
   }
+  _effect.options = _options
 
   _effect()
+  return _effect
 }
 
 // 收集依赖
@@ -38,5 +45,11 @@ export const trigger = (target: object, key: string | symbol) => {
     return new Error("");
   }
 
-  deps.forEach((effect: Function) => effect());
+  deps.forEach((effect: Function) => {
+    if (effect?.prototype?._options?.scheduler) {
+      effect?.prototype?._options?.scheduler?.()
+    } else {
+      effect()
+    }
+  });
 }
