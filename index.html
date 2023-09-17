@@ -40,9 +40,11 @@
       }, 1000);
     }, 2000);
 
+    window.a = reactive({age: 1,name: 'a'})
+
     window.b = computed(() => {
       console.log('重新计算');
-      return user.age + 1
+      return a.age+ 1
     })
 
   </script>
